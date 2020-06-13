@@ -1,59 +1,47 @@
 const mongoose = require("mongoose");
-
 const Schema = mongoose.Schema;
 
-const workoutSchema = new Schema(
-  {
+const WorkoutSchema = new Schema({
     day: {
-      type: Date,
-      default: Date.now
+        type: Date,
+        default: Date.now()
     },
-    exercises: [
-      {
+    exercises: [{
         type: {
-          type: String,
-          trim: true,
-          required: "Enter an exercise type"
+            type: String,
+            trim: true,
+            required: "Exercise needs a type"
         },
         name: {
-          type: String,
-          trim: true,
-          required: "Enter an exercise name"
+            type: String,
+            trim: true,
+            required: "Exercise needs a name"
         },
         duration: {
-          type: Number,
-          required: "Enter an exercise duration in minutes"
+            type: Number,
+            required: "Exercise needs a duration"
         },
-        weight: {
-          type: Number
-        },
-        reps: {
-          type: Number
-        },
-        sets: {
-          type: Number
-        },
-        distance: {
-          type: Number
-        }
-      }
-    ]
-  },
-  {
-    toJSON: {
-
-      virtuals: true
-    }
-  }
-);
-
-workoutSchema.virtual("totalDuration").get(function() {
-
-  return this.exercises.reduce((total, exercise) => {
-    return total + exercise.duration;
-  }, 0);
+        weight: Number,
+        reps: Number,
+        sets: Number,
+        distance: Number
+    }],
+    totalDuration: Number
 });
 
-const Workout = mongoose.model("Workout", workoutSchema);
+WorkoutSchema.methods.setTotalDuration = function () {
+    // console.log("called");
+    let sum = 0;
+    for (let i = 0; i < this.exercises.length; i++) {
+        sum += this.exercises[i].duration;
+    }
+    this.totalDuration = sum;
+};
+
+// WorkoutSchema.methods.numExercises = function () {
+//     return this.exercises.length;
+// };
+
+const Workout = mongoose.model("Workout", WorkoutSchema);
 
 module.exports = Workout;
