@@ -46,33 +46,34 @@ validateInputs();
 function validateInputs() {
   let isValid = true;
 if (workoutType === "resistance") {
-if (nameInput.value.trim() === "") {
-isValid = false;
+
+  if (nameInput.value.trim() === "") {
+  isValid = false;
     }
-if (weightInput.value.trim() === "") {
+    if (weightInput.value.trim() === "") {
       isValid = false;
     }
-if (setsInput.value.trim() === "") {
+      if (setsInput.value.trim() === "") {
       isValid = false;
     }
-if (repsInput.value.trim() === "") {
+        if (repsInput.value.trim() === "") {
+        isValid = false;
+    }
+          if (resistanceDurationInput.value.trim() === "") {
       isValid = false;
     }
-if (resistanceDurationInput.value.trim() === "") {
+            } else if (workoutType === "cardio") {
+              if (cardioNameInput.value.trim() === "") {
+              isValid = false;
+    }
+              if (durationInput.value.trim() === "") {
       isValid = false;
     }
-  } else if (workoutType === "cardio") {
-    if (cardioNameInput.value.trim() === "") {
-      isValid = false;
-    }
-if (durationInput.value.trim() === "") {
-      isValid = false;
-    }
-if (distanceInput.value.trim() === "") {
+              if (distanceInput.value.trim() === "") {
       isValid = false;
     }
   }
-if (isValid) {
+                if (isValid) {
     completeButton.removeAttribute("disabled");
     addButton.removeAttribute("disabled");
   } else {
