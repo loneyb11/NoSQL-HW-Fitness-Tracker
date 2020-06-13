@@ -1,47 +1,60 @@
 const mongoose = require("mongoose");
+
 const Schema = mongoose.Schema;
 
-const WorkoutSchema = new Schema({
+const workoutSchema = new Schema(
+  {
     day: {
-        type: Date,
-        default: Date.now()
+      type: Date,
+      default: Date.now
     },
-    exercises: [{
+    exercises: [
+      {
         type: {
-            type: String,
-            trim: true,
-            required: "Exercise needs a type"
+          type: String,
+          trim: true,
+          required: "Enter an exercise type"
         },
         name: {
-            type: String,
-            trim: true,
-            required: "Exercise needs a name"
+          type: String,
+          trim: true,
+          required: "Enter an exercise name"
         },
         duration: {
-            type: Number,
-            required: "Exercise needs a duration"
+          type: Number,
+          required: "Enter an exercise duration in minutes"
         },
-        weight: Number,
-        reps: Number,
-        sets: Number,
-        distance: Number
-    }],
-    totalDuration: Number
+        weight: {
+          type: Number
+        },
+        reps: {
+          type: Number
+        },
+        sets: {
+          type: Number
+        },
+        distance: {
+          type: Number
+        }
+      }
+    ]
+  },
+  {
+    toJSON: {
+      // include any virtual properties when data is requested
+      virtuals: true
+    }
+  }
+);
+
+// adds a dynamically-created property to schema
+workoutSchema.virtual("totalDuration").get(function() {
+  // "reduce" array of exercises down to just the sum of their durations
+  return this.exercises.reduce((total, exercise) => {
+    return total + exercise.duration;
+  }, 0);
 });
 
-WorkoutSchema.methods.setTotalDuration = function () {
-    // console.log("called");
-    let sum = 0;
-    for (let i = 0; i < this.exercises.length; i++) {
-        sum += this.exercises[i].duration;
-    }
-    this.totalDuration = sum;
-};
-
-// WorkoutSchema.methods.numExercises = function () {
-//     return this.exercises.length;
-// };
-
-const Workout = mongoose.model("Workout", WorkoutSchema);
+const Workout = mongoose.model("Workout", workoutSchema);
 
 module.exports = Workout;
