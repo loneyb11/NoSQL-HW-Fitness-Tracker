@@ -1,14 +1,9 @@
 # Unit 17 Nosql Homework: Workout Tracker
 
-<<<<<<< HEAD
-![fitness-tracker](assets/fitness-tracker.mov)
-=======
 ![fitness tracker](../assets/fitness-tracker.mov)
->>>>>>> 7b278ba9a9c6107b15c91d20024feb27b1420175
 
 
 An application for a user to create and track their workouts using a Mongo database and a Mongoose schema.
-
 
 
 Installation
